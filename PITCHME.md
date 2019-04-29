@@ -633,7 +633,7 @@ The experiment takes place as following:
 - They define $\{H_1, ..., H_{10}\}$ elementary hypothesis that the corresponding $\beta_k = 0$
 - They construct 1023 intersection hypothesis
 
-:star: $1023 = 2^0 + 2^1 + ... + 2^9$
+:star: $1023 = 2^{10} - 1$
 
 ---
 
@@ -720,4 +720,217 @@ $\phi(R) = \{2, 3, 4\}$ vs $\phi(R) = \{1, 2, 3, 4\}$ in variable selection.
 
 
 ### ![](https://media.giphy.com/media/ecntzXAGTli2Q/giphy.gif)
+
 ---
+
+# Shortcuts
+
+As we've seen before, with p hypothesis it takes $2^p-1$ to build the closed testing procedure.
+
+With a too big number of them ($>30$) it becomes undoable.
+
+To make the process faster, a solution called *shortcuts* exists.
+
+*Shortcuts* were focused on finding the rejected individual hypotheses.
+
+Here the authors introduce shortcuts for non consonant procedure.
+
+---
+
+# Shortcuts
+
+For this purpose they focus on some specific local tests that will allow us to find $t_\alpha(R)$ in an easy way.
+
+The studied test are those based on:
+- Fisher combination
+- Simes' inequality
+- Sums of normally distributed tests statistics
+
+---
+
+# Reminder
+
+We are looking for $t_\alpha(R)$, which is the biggest subset in R, that is not rejected by the closed testing procedure.
+
+
+---
+
+# Fisher combinations
+
+*This test has already been presented in the beginning of the semester*
+
+We assume here a set of $n$ **independant** elementary hypothesis $H_1, ..., H_n$ and their associated p-values $p_1, ..., p_n$.
+
+The test rejects an intersection hypothesis $I \in C$ if:
+$$-2\sum_{i \in I}\log(p_i) \geq g_{\#I}$$
+where $g_r$ is the $1-\alpha$ quantile of a $\chi^2$ with $2r$ degree of freedom.
+
+---
+
+# Fisher combinations
+$$-2\sum_{i \in I}\log(p_i) \geq g_{\#I}$$
+
+This test is a valid $\alpha$ level test for the intersection hypothesis $H_I$.
+<!-- We could add a proof here as well. -->
+
+From this we can derive a shortcut formula.
+
+*Let's figure out how and then show the formula*
+
+
+---
+
+# Fisher combinations
+$$-2\sum_{i \in I}\log(p_i) \geq g_{\#I}$$
+
+We want to find the biggest non-rejected hypothese in $I$.
+
+*In class*
+
+<!-- see notes -->
+
+
+---
+
+# Fisher combinations
+
+From this, we can conclude the following:
+For any $s \lt \#R$, we have $t_\alpha \leq s$ if
+$$u(R, s+1) \leq \max_{0\leq j \leq M}\{g_{s+j+1} - u(\overline{R}, j)\}$$
+
+where $u(I_k)$ is the sum of the k-small $-2\log(p_k)$, $\overline{R}$ is the complement of R.
+
+This way we can obtain the value of $t_\alpha(R)$ for any $R$ without exponentially many tests.
+
+---
+
+# Example
+
+A nice example for this use case is proposed in the paper.
+
+It comes from data reporting unwanted reaction due to a certain drug.
+Hypotheses are assumed independant.
+
+The p-values are given in the next slide. Both analyses on FWER and FDR results in no rejections for the data.
+
+---
+
+<style scoped>
+td {
+    font-size: 20px;
+}
+</style>
+
+| Reaction   | $p$-value |
+|----------|:-------------:|
+| Anemia| 0.02 |
+| Myocardial infarct | 0.03 |
+| Diarrhea | 0.04 | 
+| Nausea and vomiting |  0.04 |
+| Stomatitis |  0.08   |
+| Skin rash | 0.10 |
+| Dehydration |  0.12 |
+| Shortness of breath | 0.18 | 
+| Renal failure | 0.20 | 
+| Fever | 0.23 |
+| Blurred vision | 0.26 |
+| Anorexia | 0.28 |
+| Bronchitis | 0.30 |
+| Wheezing| 0.31 |
+| Headache | 0.40 |
+| Blurred vision | 0.50 |
+
+---
+
+# Example
+
+One interesting analysis gives you that by selecting $R=$ *{diarrhea, nausea and vomiting, and stomatitis}* we obtain a $t_\alpha(R)=3$ meaning that we can conclude there is at least one gastrointestinal undesirable effect according to Fisher test at $\alpha=0.05$.
+
+:mask:
+
+---
+
+# Example 
+
+A researcher could also be interested in optimizing the number of correct rejections. A good way to do so would be to plot the lower bound of correct rejections for a specific number of rejection $\#R$.
+
+*Next slide*
+
+We can see that, taking the hypothesis with the 10 smallest p-values we expect 5 correct rejections. And with the 6 smallest already 4 rejections !
+
+---
+
+<style scoped>
+img {
+    width: 700px;
+}
+</style>
+
+![](graph_rej.png)
+
+---
+
+# Simes' type local test
+
+In 1986, Simes proposed a modified version of Bonferroni as following.
+Let $p_1, ..., p_n$ the ordered p value on $n$ hypotheses. 
+Then $H_0$ is rejected if $p_j \leq \frac{j\alpha}{n}$,  for any $j=1, ..., n.$
+
+Simes proved that if the p-values are independant the test is an $1-\alpha$ level test for $H_0 = \{H_1, ..., H_n\}$.
+
+It has been proven later by Sarkar (1998) that this holds for more general conditions.
+
+<!-- A proof of Simes can also be added here -->
+
+---
+
+# Simes' type local test
+
+The focus here is actually more global that Simes' test but include generally a family of test that looks like: 
+$$p^I_i \leq c^{\#I}_i$$ 
+for at least one $i$. 
+$p^I_i$ is the $i^{th}$ smallest p-values in $I$ and $c^{\#I}_i$ the critical value.
+
+---
+
+# Simes' type local test
+
+Two shortcuts are available with this type of test.
+The first one requires that $c^l_i \leq c^m_i$ for $l \geq m$.
+:star: *Holds for Simes as $c^l_i = \frac{i\alpha}{l}$* 
+
+Let $\delta(P_I) = 1$ the p-values $P_I$ of $H_I$ leads to the rejection of the test, $0$ otherwise.
+The test satisfies the two following properties:
+$$\delta(\{p_1, ..., p_k\}) \leq \delta(\{q_1, ..., q_k\})$$
+for $p_1 \leq q_1, ..., p_k \leq q_k$
+
+---
+
+# Simes' type local test
+
+And 
+$$ \delta(q \cup P_I) \geq \delta(P_I)$$
+as long as $q\leq \min(p\in P_I)$
+The second properties comes from the condition above.
+
+<!-- This means that if we add an hypothesis with a smaller p value than all existing one, then there is more chance to accept the test -->
+
+Now, let's say we want to check whether $t_\alpha(R) \leq s$
+Quite similarly that with Fisher combinations we do:
+
+
+---
+
+# Simes' type local test
+
+- We take the $s+1$ bigger p-values in $R$ and compute the test on the resulting set $Q^R_{s+1}$. By ppt 1 if $\delta(Q^R_{s+1}) = 1$, all intersecting hypothese with $s+1$ elements of $R$ is also rejected.
+- Then we add one by one the largest p-values that are not in R and check whether $\delta(Q^R_{s+1} \cup \overline{Q}^R_{j})=1$, $\forall j$, as long as the values are bigger than $\min_{i\in R}(p_i)$
+
+<!-- using ppt2 allows us handle to case we add a value smaller than all  -->
+
+By the two first properties we proved that there could not be a set of size $\geq s+1$ in $R$ that is not rejected.
+Meaning that  $t_\alpha(R) \leq s$.
+
+---
+
+
