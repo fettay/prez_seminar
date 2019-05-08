@@ -864,7 +864,7 @@ img {
 }
 </style>
 
-![](graph_rej.png)
+![](https://i.ibb.co/Q8h390C/graph-rej.png)
 
 ---
 
