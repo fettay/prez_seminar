@@ -1095,7 +1095,7 @@ our estimate is $1$ meaning that we estimate that 3 variables are relevant for t
 
 ---
 
-### Conclusion
+# Conclusion
 
 - The procedure is pretty general and only assumes that the number of hypothesis is define and finite
 
