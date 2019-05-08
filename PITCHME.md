@@ -27,8 +27,6 @@ paginate: true
 - The proposed procedure
 - Example
 - Shortcuts
-- Point estimation
-
 ---
 <!-- _class: lead -->
 <!-- _class: gaia -->
@@ -144,7 +142,7 @@ Let's say we decide to use **linear regression** on our dataset and check the p-
 
 In the exploratory data analysis phase, I don't want to **decide**. 
 
-In regular research the user decide of an error component and ==the procedure rejects the hypothesis it wants==. 
+In regular research the user decide of an error component and **the procedure rejects the hypothesis it wants**. 
 *Reject # of memes but not avg of presenters for FWER < 0.05*
     
 ---
@@ -153,11 +151,8 @@ In regular research the user decide of an error component and ==the procedure re
 
 In the exploratory data analysis phase (EDA), I don't want to **decide**. 
 
-In EDA the user ==choose which hypothesis to reject== and the procedure gives him a confidence statement of how many False Rejection.
+In EDA the user **choose which hypothesis to reject** and the procedure gives him a confidence statement of how many False Rejection.
 *What do I risk if I choose only the 3 first variables after nb of memes?*
-
-**Why would I do that?**
-Do you really want to count the number of memes in each presentations? 
 
 ---
 
@@ -302,7 +297,7 @@ This will be done by inversing the regular role.
 
 The CTP has been introduced by Marcus (TAU), Peritz and Gabriel in 1976.
 
-The idea is to reject an hypothese $H_k$ called elementary hypothese at confidence $\alpha$, if we can reject all set of hypothesis $S$ with $H_k \in S$ at confidence $\alpha$.
+The idea is to reject an hypothese $H_k$ called elementary hypothese at confidence $\alpha$, if we can reject all set of hypothesis $S$ such that,  $H_k \in S$ at confidence, $\alpha$.
 
 Those sets of hypothesis can be defined using different methods. Makes closed testing a family of procedures.
 
@@ -386,9 +381,7 @@ Let's take another example
 $$\underline{H_{123}} $$
 $$\underline{H_{12}} \quad \underline{H_{13}} \quad \underline{{H_{23}}}$$
 $$\underline{H_{1}} \quad H_{2} \quad H_{3}$$
-
 The rejection $H_{23}$ does not help to reject any elementary hypothesis, we call it **non-consonant** rejection.
-
 A **consonant** procedure does not have any non-consonant rejection.
 
 ---
@@ -440,7 +433,7 @@ $$\tau({H_1, H_3}) \in (0, 1)$$
 In order to do so, the authors decided to look at the closed testing results. 
 Let $t$ be the biggest subset in our rejection set that **is not rejected** by the closed testing procedure.
 
-Then $\{1, ..., t\}$ is a $1-\alpha$ confidence interval for the number of false rejection.
+Then $\{0, 1, ..., \#t\}$ is a $1-\alpha$ confidence set for the number of false rejection.
 
 $\alpha$ is defined while building the CT procedure.
 
@@ -476,7 +469,7 @@ What confidence set I get if I reject: $H_1$ | $H_3$ | $H_2, H_3$ | $H_1, H
 Let $R$ be a set of rejected elementary hypothesis
 $X$ be the set of hypothesis (elementary and interserction) rejected by the CT procedure
 $C$ the set of all the hypothesis (elementary and interserction)
-$C_R$ the set of the rejected hypothesis in $C$ by $R$
+$C_R$ the set of all combinations of elements in $R$
 $\tau(R)$ is the number of false rejection
 Finally $t_\alpha(R)= \max \{ \#I: I \in C_R, I \notin X \}$
 
@@ -505,7 +498,6 @@ $$\underline{H_{1}} \quad H_{2} \quad H_{3}$$
 
 Assuming 2 errors for $H_{13}$ | $H_{23}$
 
-*Remember that $H_{23}$ can be rejected with confidence $1-\alpha$*
 
 --- 
 
@@ -522,7 +514,6 @@ where $f_\alpha(R) = \#R - t_\alpha(R)$
 
 # The set $\phi(R)$
 
-*Let's start with an example and we will prove it more fomally*
 
 $$\underline{H_{123}} $$
 $$\underline{H_{12}} \quad \underline{H_{13}} \quad \underline{{H_{23}}}$$
@@ -530,7 +521,7 @@ $$\underline{H_{1}} \quad H_{2} \quad H_{3}$$
 
 What confidence set for $\phi(R)$ I get if I reject: $H_1$ | $H_2$ | $H_{23}$ | $H_{123}$
 
-<!-- {1} | {0, 1} | {1, 2} | {1, 2, 3} -->
+<!-- {1} | {0, 1} | {1, 2} | {2, 3} -->
 
 
 ---
@@ -631,7 +622,7 @@ The experiment takes place as following:
 
 - The authors fit a linear regression with the 10 variables and an intercept
 - They define $\{H_1, ..., H_{10}\}$ elementary hypothesis that the corresponding $\beta_k = 0$
-- They construct 1023 intersection hypothesis
+- They construct 1023 intersecting hypothesis
 
 :star: $1023 = 2^{10} - 1$
 
@@ -673,7 +664,7 @@ The 4 variables *{forearm, waist, height and thigh}* makes 15 hypothesis.
 - *{forearm, height, thigh}* is not rejected so $t_\alpha(R) = 3$
 $\Rightarrow$ The model contains at least one relevant variable but not necessarily more.
 
-This really means that we could not trust the p values above.
+This really means that we could not trust the t-test in this case.
 
 ---
 
@@ -692,13 +683,21 @@ The smallest set that contains at least two relevant variables is the set *{wais
 
 The optimal set in variable selection is not expected to be optimal for the confidence-set approach.
 
-*Example with two variables highly correlated*
+*Example*
 <!-- Taking two variables highly correlated with the target and together, variable selection will prefer to select one of them although the confidence set will emphasis the uncertainty of the choice between the two and do not reject if it involves any of the two. -->
 
-Although variable selections is looking for an optimal set, here we want to quantify the risk taken by the choice of a rejection set.
+Although variable selections is looking for an optimal set, here we want to minimize the risk of falsely rejecting a true hypothesis.
 
-$\phi(R) = \{2, 3, 4\}$ vs $\phi(R) = \{1, 2, 3, 4\}$ in variable selection.
-<!-- You want to minimize the risk of making too many false rejection -->
+---
+# Results
+
+Selecting variables a priori is at least as powerful as not to.
+
+This is the "price to pay" to avoid overfitting.
+
+Here by selecting a priori $R=$ {forearm, waist, height and thigh} $\phi(R)$ improves from $\{1, 2, 3, 4\}$ to $\{2, 3, 4\}$.
+
+*This comes from the definition of full model in the F statistic $\Rightarrow$  risk of overfitting*
 
 --- 
 
@@ -725,7 +724,7 @@ $\phi(R) = \{2, 3, 4\}$ vs $\phi(R) = \{1, 2, 3, 4\}$ in variable selection.
 
 # Shortcuts
 
-As we've seen before, with p hypothesis it takes $2^p-1$ to build the closed testing procedure.
+As we've seen before, with p hypothesis it takes $2^p-1$ tests to build the closed testing procedure.
 
 With a too big number of them ($>30$) it becomes undoable.
 
@@ -757,7 +756,6 @@ We are looking for $t_\alpha(R)$, which is the biggest subset in R, that is not 
 
 # Fisher combinations
 
-*This test has already been presented in the beginning of the semester*
 
 We assume here a set of $n$ **independant** elementary hypothesis $H_1, ..., H_n$ and their associated p-values $p_1, ..., p_n$.
 
@@ -796,7 +794,7 @@ We want to find the biggest non-rejected hypothese in $I$.
 
 From this, we can conclude the following:
 For any $s \lt \#R$, we have $t_\alpha \leq s$ if
-$$u(R, s+1) \leq \max_{0\leq j \leq M}\{g_{s+j+1} - u(\overline{R}, j)\}$$
+$$u(R, s+1) \geq \max_{0\leq j \leq M}\{g_{s+j+1} - u(\overline{R}, j)\}$$
 
 where $u(I_k)$ is the sum of the k-small $-2\log(p_k)$, $\overline{R}$ is the complement of R.
 
@@ -876,11 +874,10 @@ In 1986, Simes proposed a modified version of Bonferroni as following.
 Let $p_1, ..., p_n$ the ordered p value on $n$ hypotheses. 
 Then $H_0$ is rejected if $p_j \leq \frac{j\alpha}{n}$,  for any $j=1, ..., n.$
 
-Simes proved that if the p-values are independant the test is an $1-\alpha$ level test for $H_0 = \{H_1, ..., H_n\}$.
+Simes proved that if the p-values of true null hypothesis are independant the test is an $1-\alpha$ level test for $H_0 = \{H_1, ..., H_n\}$.
 
 It has been proven later by Sarkar (1998) that this holds for more general conditions.
 
-<!-- A proof of Simes can also be added here -->
 
 ---
 
@@ -893,15 +890,39 @@ $p^I_i$ is the $i^{th}$ smallest p-values in $I$ and $c^{\#I}_i$ the critical va
 
 ---
 
-# Simes' type local test
 
 Two shortcuts are available with this type of test.
-The first one requires that $c^l_i \leq c^m_i$ for $l \geq m$.
-:star: *Holds for Simes as $c^l_i = \frac{i\alpha}{l}$* 
 
-Let $\delta(P_I) = 1$ the p-values $P_I$ of $H_I$ leads to the rejection of the test, $0$ otherwise.
+The first one requires that $c^l_i \leq c^m_i$ for $l \geq m$.
+
+:star: *Holds for Simes as $c^l_i = \frac{i\alpha}{l}$*
+
+To prove that $t_\alpha(R) \leq s$ we only need to:
+- Compute Simes' Test on the set of s+1 bigger p-values of R
+- Take all the p-values not in R that are bigger than a value in R, and compute Simes Test on the set built by adding them 1 by 1.
+
+
+---
+
+Two shortcuts are available with this type of test.
+
+The first one requires that $c^l_i \leq c^m_i$ for $l \geq m$.
+
+:star: *Holds for Simes as $c^l_i = \frac{i\alpha}{l}$*
+
+To prove that $t_\alpha(R) \leq s$ we only need to:
+- Compute Simes' Test on the set of s+1 bigger p-values of R
+- Take all the p-values not in R that are bigger than a value in R, and compute Simes Test on the set built by adding them 1 by 1.
+
+:confounded: ????
+
+
+---
+# Simes' type local test
+
+Let $\delta(P_I) = 1$ if the p-values $P_I$ of $H_I$ leads to the rejection of the test, $0$ otherwise.
 The test satisfies the two following properties:
-$$\delta(\{p_1, ..., p_k\}) \leq \delta(\{q_1, ..., q_k\})$$
+$$\delta(\{p_1, ..., p_k\}) \geq \delta(\{q_1, ..., q_k\})$$
 for $p_1 \leq q_1, ..., p_k \leq q_k$
 
 ---
@@ -911,7 +932,7 @@ for $p_1 \leq q_1, ..., p_k \leq q_k$
 And 
 $$ \delta(q \cup P_I) \geq \delta(P_I)$$
 as long as $q\leq \min(p\in P_I)$
-The second properties comes from the condition above.
+If $c^l_i \leq c^m_i$ then it is verified.
 
 <!-- This means that if we add an hypothesis with a smaller p value than all existing one, then there is more chance to accept the test -->
 
@@ -924,7 +945,7 @@ Quite similarly that with Fisher combinations we do:
 # Simes' type local test
 
 - We take the $s+1$ bigger p-values in $R$ and compute the test on the resulting set $Q^R_{s+1}$. By ppt 1 if $\delta(Q^R_{s+1}) = 1$, all intersecting hypothese with $s+1$ elements of $R$ is also rejected.
-- Then we add one by one the largest p-values that are not in R and check whether $\delta(Q^R_{s+1} \cup \overline{Q}^R_{j})=1$, $\forall j$, as long as the values are bigger than $\min_{i\in R}(p_i)$
+- Then we add one by one the largest p-values that are not in R and check whether $\delta(Q^R_{s+1} \cup \overline{Q}^R_{j})=1$, $\forall j$, as long as the values are bigger than $\min_{i\in Q^R_{s+1}}(p_i)$
 
 <!-- using ppt2 allows us handle to case we add a value smaller than all  -->
 
@@ -932,5 +953,172 @@ By the two first properties we proved that there could not be a set of size $\ge
 Meaning that  $t_\alpha(R) \leq s$.
 
 ---
+
+
+# Simes' type local test
+
+The second shortcut proposed is faster but less general. 
+
+It requires rejected set that looks like: $R=\{i:p_i\leq q\}$
+<!-- meaning the n smallest p values-->
+We will show that:
+$f_\alpha(R) \gt \max\{S_r:1\leq r \leq \#R\}$
+Where $S_r$ is the biggest $s$ such that $p_r \leq c^n_{r-s}$
+<!--write Simes equivalent-->
+
+This kind of shortcut is very useful to build the graph that we've shown for Fisher's Test.
+
+---
+
+We assume: 
+$R=\{i:p_i\leq q\}$ and $c^l_i \leq c^m_i$ for $l \geq m$
+
+Let $p^I_{(i)}$ be the $i$th smallest p-value in $I$.
+$r = \#R$
+$n$ is the number of elementary hypothesis
+First we show that:
+$p_{(r)} \leq c^n_{r-s} \Rightarrow f_\alpha(R) \gt s$
+
+$f_\alpha(R) \gt s$ means that any subset of $R$ that contains at least $r-s$ elements is rejected by the closed testing procedure.
+
+---
+
+Let's take $K \subseteq	R$ with $\#K \geq r-s$ and $J \supseteq K$
+<!-- we need to show that we can reject J -->
+We have $p^J_{(r-s)} \leq p^K_{(r-s)} \leq p_{(r)}$
+and 
+$p_{(r)} \leq c^n_{r-s} \leq c^{\#J}_{r-s}$ by the second condition.
+So:
+$p^J_{(r-s)} \leq c^{\#J}_{r-s}$ 
+and we can reject $K$.
+
+This means that $t_\alpha(R) \lt r-s$ and $f_\alpha(R) \gt s$.
+
+---
+
+So for now we've shown that:
+$f_\alpha(R) \gt S_{\#R}$
+we wanted:
+$f_\alpha(R) \gt \max\{S_r:1\leq r \leq \#R\}$
+
+We can notice that $f_\alpha(R) \geq f_\alpha(S)$ for $S \subseteq R$ by definition.
+
+So letting $S$ be the set of $s \leq \#R$ smallest p-values, we get:
+$f_\alpha(R) \geq f_\alpha(S) \gt  S_s$.
+
+And the shortcut is proved.
+
+
+---
+
+Just to recap what we need for this shortcut:
+
+We compute each $c^n_{i-s}$ for all $i \leq \#R$ and all $s \leq i$
+
+For each $i$ we take the biggest $s$ that verifies $p_{(i)} \leq c^n_{i-s}$
+
+We take the max of $s$
+
+We only need values to use the hypotheses in $R$!
+
+---
+
+I think you got a taste of what shortcuts looks like.
+
+The authors are introducing two more examples similar to the one shown before but we will go on.
+
+Just for information: 
+- One of them is done for testing scores that behaves normally under their respective null hypothesis and is similar to the first one in Simes test
+- The other suggest cases when we don't use the closed testing procedure but other ones that still allows non-consonant rejections.
+
+---
+<!-- _class: gaia -->
+
+<style scoped>
+    section{
+        text-align:center;
+    }
+    h1 {
+        font-size: 2.5em;
+    }
+    img{
+        width: 500px;
+    }
+</style>
+
+# 6. Estimation and Conlusion
+
+
+### ![](https://media.giphy.com/media/9GIE3xNj6zKhEoIu7n/giphy.gif)
+
+---
+
+# Point estimation
+
+Still in the context of genomic, a lot of research try to **estimate the number of true null hypothesis in a rejection set**: $\tau(R)$
+
+Here the value upper bound value of $t_{0.5}(R)$ is proposed.
+
+This can be seen as a conservative median estimate of $\tau(R)$.
+
+:bulb:Reminder:
+$P(\max(t_{0.5}(R)) \geq \tau(R)) \leq 0.5$
+
+---
+
+# Point estimation
+
+Back to the example of the physical dataset.
+
+For the set of all the 10 part of the body:
+$t_{0.95} = \{0, ..., 8\}$ and at least two relevant variables.
+
+However our estimate of rejected true null hypothesis is 6. 
+
+For the set $R =$ {waist, forearm, height, thigh}
+our estimate is $1$ meaning that we estimate that 3 variables are relevant for the linear regression.
+
+
+---
+
+# Conclusion
+
+- Letting a statistical procedure dictate to the researcher what is interesting goes against spirit of exploratory research.
+
+- Just picking hypothesis without proper information create a risk of overfit.
+
+- The procedure lets the researcher decide but advise him about the risk taken by his choice.
+
+- No need for new metric, or new algorithm.
+
+
+
+---
+
+### Conclusion
+
+- The procedure is pretty general and only assumes that the number of hypothesis is define and finite
+
+Main pitfall: without the usage of shortcuts the procedure requires relatively small number of hypothesis
+
+---
+<!-- _class: gaia -->
+
+<style scoped>
+    section{
+        text-align:center;
+    }
+    h1 {
+        font-size: 2.5em;
+    }
+    img{
+        width: 700px;
+    }
+</style>
+
+# THANK YOU
+
+
+### ![](https://media.giphy.com/media/jG5uIKBfJyouY/giphy.gif)
 
 
