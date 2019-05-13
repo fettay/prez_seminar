@@ -20,13 +20,15 @@ paginate: true
 
 ---
 
-## Agenda
+# Agenda
 
 - Motivation
 - Introduction to closed testing
 - The proposed procedure
 - Example
 - Shortcuts
+- Point estimation
+
 ---
 <!-- _class: lead -->
 <!-- _class: gaia -->
@@ -241,7 +243,7 @@ Finally the procedure has to be post hoc, meaning that all choices inherent to t
 
 **Is FWER post hoc ?** No, the significance level has to be determined before looking at the data.
 
-**Is FDR mild ?** Neither, the fdr and the hypothesis have also to be determined before starting the procedure.
+**Is FDR mild ?** No, the fdr have also to be determined before starting the procedure.
 
 
 ---
@@ -296,8 +298,9 @@ This will be done by inversing the regular role.
 # Closed testing procedure
 
 The CTP has been introduced by Marcus (TAU), Peritz and Gabriel in 1976.
+This is a multiple testing procedure.
 
-The idea is to reject an hypothese $H_k$ called elementary hypothese at confidence $\alpha$, if we can reject all set of hypothesis $S$ such that,  $H_k \in S$ at confidence, $\alpha$.
+The idea is to reject an hypothese $H_k$ called elementary hypothesis at confidence $\alpha$, if we can reject all set of hypothesis $S$ such that,  $H_k \in S$ at confidence, $\alpha$.
 
 Those sets of hypothesis can be defined using different methods. Makes closed testing a family of procedures.
 
@@ -393,8 +396,6 @@ Usually consonants procedures are prefered because they may imply gain of power.
 However a **mild** procedure can take interest of the non-consonant rejections.
 
 Let's say we choose to reject $H_2$ and $H_3$, what information the consonant rejection can give me about the risk taken?
-
-It is important to notice that $H_{23}$, just like $H_1$ could be rejected with confidence $1-\alpha$. 
 
 ---
 
@@ -501,7 +502,7 @@ Assuming 2 errors for $H_{13}$ | $H_{23}$
 
 --- 
 
-# The set $\phi(R)$
+# $\phi(R)$
 
 We might also want to quantify the true hypothesis in $R$
 
@@ -512,7 +513,7 @@ where $f_\alpha(R) = \#R - t_\alpha(R)$
 
 --- 
 
-# The set $\phi(R)$
+# $\phi(R)$
 
 
 $$\underline{H_{123}} $$
@@ -899,7 +900,7 @@ The first one requires that $c^l_i \leq c^m_i$ for $l \geq m$.
 
 To prove that $t_\alpha(R) \leq s$ we only need to:
 - Compute Simes' Test on the set of s+1 bigger p-values of R
-- Take all the p-values not in R that are bigger than a value in R, and compute Simes Test on the set built by adding them 1 by 1.
+- Take all the p-values not in R that are (not all exactly..), and compute Simes Test on the set built by adding them 1 by 1.
 
 
 ---
@@ -932,8 +933,8 @@ for $p_1 \leq q_1, ..., p_k \leq q_k$
 And 
 $$ \delta(q \cup P_I) \geq \delta(P_I)$$
 as long as $q\leq \min(p\in P_I)$
-If $c^l_i \leq c^m_i$ then it is verified.
-
+<!--If $c^l_i \leq c^m_i$ then it is verified.
+-->
 <!-- This means that if we add an hypothesis with a smaller p value than all existing one, then there is more chance to accept the test -->
 
 Now, let's say we want to check whether $t_\alpha(R) \leq s$
@@ -990,7 +991,7 @@ and
 $p_{(r)} \leq c^n_{r-s} \leq c^{\#J}_{r-s}$ by the second condition.
 So:
 $p^J_{(r-s)} \leq c^{\#J}_{r-s}$ 
-and we can reject $K$.
+and we can reject $J$ for any $J$ so we can reject $K$.
 
 This means that $t_\alpha(R) \lt r-s$ and $f_\alpha(R) \gt s$.
 
